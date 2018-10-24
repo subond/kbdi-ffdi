@@ -9,7 +9,9 @@ Welcome to kbdi-ffdi's documentation!
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
-
+   
+   ./installation.rst
+   ./quickstart.rst
 
 
 Indices and tables
