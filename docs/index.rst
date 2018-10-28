@@ -3,9 +3,11 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-kbdi-ffdi: Keech Byram Drought Index and McArthur's Forest Fire Danger Index
+Keech Byram Drought Index and McArthur's Forest Fire Danger Index
 ==============================================================================
-kbdi-ffdi is a Python package for calculating the Keech-Byram Drought Index (KBDI) and McArthur's Forest Fire Danger Index (FFDI) from daily surface-level meteorological data. KBDI and FFDI are commonly used metrics for assessing drought and fire danger in South Africa and Australia. With kbdi-ffdi, you can compute KBDI and FFDI from csv data or netCDF data and save the results.  
+kbdi-ffdi is a Python package for calculating the Keech-Byram Drought Index (KBDI) and McArthur's Forest Fire Danger Index (FFDI) from daily surface-level meteorological data. KBDI and FFDI are commonly used metrics for assessing drought and fire danger in South Africa and Australia. With the kbdi-ffdi Python package, you can compute KBDI and FFDI from csv data or netCDF data and save the results.  
+
+:download:`Technical Report <ffdi_kbdi_technical_report.pdf>`
 
 
 .. toctree::

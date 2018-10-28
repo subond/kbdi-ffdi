@@ -1,4 +1,4 @@
-__name__ = "kbdi_ffdi"
+__name__ = "kbdiffdi"
 __version__ = "0.1.0"
 
 from .features import *

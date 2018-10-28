@@ -4,7 +4,7 @@ import datetime
 
 import numpy as np
 
-from kbdi_ffdi.features import feature
+from kbdiffdi.features import feature
 
 np.warnings.filterwarnings('ignore')
 

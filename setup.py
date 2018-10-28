@@ -32,7 +32,7 @@ setuptools.setup(
     author_email="arndt204@umn.edu",
     license="MIT",
     description="a library for calculating the Keech-Byram drought index and McArthur's Forest Fire Danger Index",
-    keywords="python gis geography climate drought moisture",
+    keywords="python giscience forest-fire weather climate drought",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/jwarndt/kbdi_ffdi",
