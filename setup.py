@@ -29,7 +29,7 @@ setuptools.setup(
     name="kbdi_ffdi",
     version=__version__,
     author="Jacob Arndt",
-    author_email="arndt204@umn.edu",
+    author_email="jakewarndt@gmail.com",
     license="MIT",
     description="a library for calculating the Keech-Byram drought index and McArthur's Forest Fire Danger Index",
     keywords="python giscience forest-fire weather climate drought",
@@ -45,7 +45,8 @@ setuptools.setup(
         "Operating System :: OS Independent",
         "Topic :: Scientific/Engineering"
     ),
-    entry_points={
-        "console_scripts": []
+    entry_points = {
+        'console_scripts': [
+            'kbdi-ffdi-run = kbdiffdi.scripts.kbdi_ffdi_run:main'],
     }
 )

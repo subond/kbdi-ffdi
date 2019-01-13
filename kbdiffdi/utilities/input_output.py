@@ -7,8 +7,8 @@ import numpy as np
 # from osgeo import ogr
 # from osgeo import osr
 
-from kbdi_ffdi.utilities import conversion
-from kbdi_ffdi.features import feature
+from kbdiffdi.utilities import conversion
+from kbdiffdi.features import feature
 
 def load_csv(filename):
     """
