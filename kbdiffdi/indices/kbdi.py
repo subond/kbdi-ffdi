@@ -71,7 +71,7 @@ class KBDI(object):
         net_rainfall = np.zeros(shape=(len(self.prcp.data), len(self.prcp.data[0]), len(self.prcp.data[0][0]), len(self.prcp.data[0][0][0]))) # netRainfall
 
         #variables for the calculation
-        daily_prcp = self.prcp.data # the precipitation data
+        daily_prcp = copy.deepcopy(self.prcp.data) # the precipitation data
         running_total = np.zeros(shape=(1, len(self.prcp.data[0]), len(self.prcp.data[0][0]))) # a running total for continuous rain days
         consec = np.zeros(shape=(len(self.prcp.data[0]), len(self.prcp.data[0][0])), dtype=bool) # which cells see consecutive rainfall?
         already_subtracted = np.zeros(shape=(len(self.prcp.data[0]), len(self.prcp.data[0][0])), dtype=bool) # has the 0.20 threshold been met and 0.20 subtracted?
@@ -158,9 +158,9 @@ class KBDI(object):
                 else:
                     yearly_sums = np.append(yearly_sums, [running_total], axis=0)
                 cur_year = dates[n].year
-                running_total = self.prcp.data[n]
+                running_total = raindata[n]
             else:
-                running_total += self.prcp.data[n]
+                running_total += raindata[n]
             n+=1
         # make sure to include the last year of data. The while condition doesn't    
         if dates[n-1].month == 12 and dates[n-1] == 31: 
@@ -196,7 +196,7 @@ class KBDI(object):
             ET: ndarray shape=(1,m,n)
                 daily evapotranspiration
         """
-        numerator = (203.2 - prev_KBDI.data) * (0.968 * np.exp(0.0875 * prev_temp + 1.5552) - 8.30)
+        numerator = (203.2 - prev_KBDI) * (0.968 * np.exp(0.0875 * prev_temp + 1.5552) - 8.30)
         denominator = 1 + 10.88 * np.exp(-0.001736 * self.get_mean_annual_rainfall().data)
         ET = 0.001 * (numerator / denominator)
         return ET
@@ -226,16 +226,17 @@ class KBDI(object):
         kb_cube = np.ones(shape=(len(self.temp.data), len(self.temp.data[0]), len(self.temp.data[0][0]), len(self.temp.data[0][0][0])))
 
         prev_KBDI = self.get_first_KBDI()
+        prev_kbdi_data = prev_KBDI.data
         
         n = 0
         while n < len(self.temp.data):
             # today's ET requires yesterday's KBDI, yesterday's temp, and mean annual rainfall. 
-            ET = self.calculate_ET(prev_KBDI, self.temp.data[n]) 
+            ET = self.calculate_ET(prev_kbdi_data, self.temp.data[n]) 
             # KBDI for today is calculated based on yesterday's KBDI, ET, and yesterday's effective prcp (net rainfall)  
-            KBDI = prev_KBDI.data + ET - self.net_rainfall.data[n]  # output is a 2d array
+            KBDI = prev_kbdi_data + ET - self.net_rainfall.data[n]  # output is a 2d array
             KBDI = np.where(KBDI < 0, 0, KBDI) # KBDI values can't be negative
             kb_cube[n] = KBDI # set kb_cube to today's KBDI, this then becomes yesterday's KBDI at the next iteration 
-            prev_KBDI.data = KBDI # prev_KBDI.set_data(KBDI)
+            prev_kbdi_data = KBDI # prev_KBDI.set_data(KBDI)
             n+=1
         out_kbdi = feature.RasterStack()
         out_kbdi.create_sc_stack(kb_cube,
